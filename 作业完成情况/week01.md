@@ -6,7 +6,7 @@
 | 4    | 肖敏（1）   | https://github.com/siyecaovsqisehua11/Frontend-02-Template.git | **1.待完成**                                                 |
 | 5    | 彭提莫      | https://github.com/TeemoPeng/Frontend-02-Template            | 1.已完成<br />2.知识图谱详细                                 |
 | 6    | 马祥赛      | https://github.com/maxiangsai/Frontend-02-Template           | 1.待完成                                                     |
-| 7    | 徐庆        | https://github.com/tesla4321/Frontend-02-Template            | 1.已完成<br />2.知识图谱详细                                 |
+| 7    | 徐庆        | https://github.com/tesla4321/Frontend-02-Template            | 1.已完成<br />2.知识图谱深入                                 |
 | 8    | 林一        | https://github.com/0Ichirin1/Frontend-02-Template            | **1.待完成**                                                 |
 | 9    | 乔晓璐（1） | https://github.com/SherryQiao/Frontend-02-Template           | **1.待完成**                                                 |
 | 10   | 张寒        | https://github.com/zhanghan19/Frontend-02-Template           | 1.已完成                                                     |
