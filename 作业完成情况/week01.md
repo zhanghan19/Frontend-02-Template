@@ -17,6 +17,6 @@
 | 15   | 张丞        |                                                              |                               |
 | 16   | 朱桂彬      |                                                              |                               |
 | 17   | 张宏毅      | https://github.com/hyzhang6639/Frontend-02-Template          |                               |
-| 18   | 谢涛        | https://github.com/anran-xt/Frontend-02-Template             | **待完成**                    |
+| 18   | 谢涛        | https://github.com/anran-xt/Frontend-02-Template             |1.已完成                    |
 | 19   |             |                                                              |                               |
 | 20   |             |                                                              |                               |
