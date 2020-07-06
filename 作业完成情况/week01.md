@@ -15,7 +15,7 @@
 | 13   | 彭鑫        | https://github.com/Carryours/Frontend-02-Template            | **1.待完成**                  |
 | 14   | 冯大超      | https://github.com/fengdachao/Frontend-02-Template           | 1.已完成                      |
 | 15   | 张丞        |                                                              |                               |
-| 16   | 朱桂彬      |                                                              |                               |
+| 16   | 朱桂彬      | https://github.com/ganluren007/Frontend-02-Template                                                    |                               |
 | 17   | 张宏毅      | https://github.com/hyzhang6639/Frontend-02-Template          |                               |
 | 18   | 谢涛        | https://github.com/anran-xt/Frontend-02-Template             |1.已完成                    |
 | 19   |             |                                                              |                               |
