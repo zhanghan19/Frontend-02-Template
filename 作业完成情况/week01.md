@@ -3,7 +3,7 @@
 | 1    | 焦玉琦      | https://github.com/gogogotest/Frontend-02-Template           | **1.待完成**                  |
 | 2    | 陈桦（1）   | https://github.com/chenhuaa/Frontend-02-Template             |        1.已完成                       |
 | 3    | 史琴行（1） | https://github.com/lisaQS/Frontend-02-Template               | 1.已完成<br />2.知识图谱甚好  |
-| 4    | 肖敏（1）   | https://github.com/siyecaovsqisehua11/Frontend-02-Template.git | **1.待完成**                  |
+| 4    | 肖敏（1）   | https://github.com/siyecaovsqisehua11/Frontend-02-Template.git | 1.已完成                  |
 | 5    | 彭提莫      | https://github.com/TeemoPeng/Frontend-02-Template            | 1.已完成<br />2.知识图谱详细  |
 | 6    | 马祥赛      | https://github.com/maxiangsai/Frontend-02-Template           | **1.待完成**                  |
 | 7    | 徐庆        | https://github.com/tesla4321/Frontend-02-Template            | 1.已完成<br />2.知识图谱 深入 |
