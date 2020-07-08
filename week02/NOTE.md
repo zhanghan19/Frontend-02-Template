@@ -54,10 +54,10 @@
 
       ```javascript
       AdditiveExpression:
-      	MultiplicativeExpression
+      	  MultiplicativeExpression
           AdditiveExpression +
       MultiplicativeExpression
-      	AdditiveExpression -
+      	  AdditiveExpression -
       MultiplicativeExpression
       ```
 
@@ -215,7 +215,7 @@
         * @param {string} str
         * @return {Array}
         */
-      var UTF8_Encoding = function(str) {
+        var UTF8_Encoding = function(str) {
             function charToUtf8(char) {
       	        var code = encodeURI(char);
                 var codeList = code.split('%');
