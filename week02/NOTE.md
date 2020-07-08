@@ -228,6 +228,7 @@
             }
             return Array.from(str).map((char) => charToUtf8(char));
         }
+        
         console.log(UTF8_Encoding('张寒'));
         
         ```
@@ -237,7 +238,7 @@
         - "abc"
         - 'abc'
 - `abc`
-    
+  
   - **Boolean**
     
     - **Object**
