@@ -54,10 +54,10 @@
 
       ```javascript
       AdditiveExpression:
-      	MultiplicativeExpression
+      	  MultiplicativeExpression
           AdditiveExpression +
       MultiplicativeExpression
-      	AdditiveExpression -
+      	  AdditiveExpression -
       MultiplicativeExpression
       ```
 
@@ -211,41 +211,58 @@
 
         ```javascript
         // 把一个String它代表的字节给转换出来，用utf8对string进行编码
-        function UTF8_Encoding(string){
-            // return new Buffer();
+        /**
+        * @param {string} str
+        * @return {Array}
+        */
+        var UTF8_Encoding = function(str) {
+            function charToUtf8(char) {
+      	        var code = encodeURI(char);
+                var codeList = code.split('%');
+                codeList = codeList.filter(item => {
+                    if(item){
+                        return parseInt(item,16)
+                    }
+                });
+                return codeList.join('|')
+            }
+            return Array.from(str).map((char) => charToUtf8(char));
         }
+        
+        console.log(UTF8_Encoding('张寒'));
+        
         ```
-
+        
       - Grammar
-
+      
         - "abc"
         - 'abc'
-        - `abc`
-
-    - **Boolean**
-
+- `abc`
+  
+  - **Boolean**
+    
     - **Object**
-
+    
     - **Null**
-
+    
       ```
       定义了但没有赋值
       是一个关键字
       ```
-
+    
       
-
+    
     - Undefined
-
+    
       ```
       未定义
       是全局变量
       ```
-
+    
       
-
+    
     - Symbol
-
+  
 - JS对象 | 对象的基础知识
 
   - 鱼
@@ -298,4 +315,16 @@
   
   - Special Object
   
-    - Array
+    - Array[[length]]
+    
+    - Object.prototype[[setPrototypeOf]]
+    
+      ```
+      Array[[length]]
+      Object.prototype[[setPrototypeOf]]
+      argument
+      ```
+    
+      
+    
+  - Host Object
