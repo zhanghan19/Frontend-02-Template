@@ -54,11 +54,30 @@
 
       ```javascript
       AdditiveExpression:
-      	  MultiplicativeExpression
+      	MultiplicativeExpression
           AdditiveExpression +
       MultiplicativeExpression
-      	  AdditiveExpression -
-      MultiplicativeExpression
+      	AdditiveExpression -
+      	MultiplicativeExpression
+      
+      
+      
+      // 带括号的四则运算产生式
+      <Expression> ::= 
+          <AdditiveExpression><EOF>
+          
+      <AdditiveExpression> ::= 
+          <MultiplicativeExpression>
+          |<AdditiveExpression><+><MultiplicativeExpression>
+          |<AdditiveExpression><-><MultiplicativeExpression>
+          
+      <MultiplicativeExpression> ::= 
+          <Number>
+          |<MultiplicativeExpression><*><Number>
+          |<MultiplicativeExpression></><Number>
+      	|(<AdditiveExpression>)
+      
+      <Number> = 有理数
       ```
 
 - 现代语言的分类
