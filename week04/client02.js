@@ -1,5 +1,4 @@
 const net = require("net");
-const parser = require("./parser.js")
 
 class Request {
     constructor(options) {
@@ -15,7 +14,7 @@ class Request {
         if (this.headers["Content-Type"] === "application/json") {
             this.bodyText = JSON.stringify(this.body);
         } else if (this.headers["Content-Type"] === "application/x-www-form-urlencoded") {
-
+        
             this.bodyText = Object.keys(this.body).map(key => `${key}=${encodeURIComponent(this.body[key])}`).join('&');
         }
         this.headers["Content-Length"] = this.bodyText.length;
@@ -32,11 +31,12 @@ class Request {
                     host: this.host,
                     port: this.port
                 }, () => {
-                    connection.write(this.toString(), "======");
+                    connection.write(this.toString());
                 })
             }
 
             connection.on("data", (data) => {
+                console.log(data.toString())
                 parser.receive(data.toString());
                 if (parser.isFinished) {
                     resolve(parser.response);
@@ -57,7 +57,6 @@ class Request {
     }
 
 }
-
 class ResponseParser {
     constructor() {
         this.WAITING_STATUS_LINE = 0;
@@ -140,7 +139,7 @@ class ResponseParser {
                 this.current = this.WAITING_BODY;
             }
         } else if (this.current === this.WAITING_BODY) {
-            console.log(char)
+            // console.log(char)
             this.bodyParser.receiveChar(char)
         }
     }
@@ -174,8 +173,9 @@ class TrunkedBodyParser {
                 this.current = this.READING_TRUNK;
             }
         } else if (this.current === this.READING_TRUNK) {
-            this.content.push(char);
-            this.length--;
+            console.log(char)
+            this.content.push(char);  // char是啥玩意
+            this.length--;  // length-- 又是什么个情况
             if (this.length === 0) {
                 this.current = this.WAITING_NEW_LINE;
             }
@@ -190,6 +190,7 @@ class TrunkedBodyParser {
         }
     }
 }
+
 
 void async function () {
     let request = new Request({
