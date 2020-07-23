@@ -54,11 +54,30 @@
 
       ```javascript
       AdditiveExpression:
-      	  MultiplicativeExpression
+      	MultiplicativeExpression
           AdditiveExpression +
       MultiplicativeExpression
-      	  AdditiveExpression -
-      MultiplicativeExpression
+      	AdditiveExpression -
+      	MultiplicativeExpression
+      
+      
+      
+      // 带括号的四则运算产生式
+      <Expression> ::= 
+          <AdditiveExpression><EOF>
+          
+      <AdditiveExpression> ::= 
+          <MultiplicativeExpression>
+          |<AdditiveExpression><+><MultiplicativeExpression>
+          |<AdditiveExpression><-><MultiplicativeExpression>
+          
+      <MultiplicativeExpression> ::= 
+          <Number>
+          |<MultiplicativeExpression><*><Number>
+          |<MultiplicativeExpression></><Number>
+      	|(<AdditiveExpression>)
+      
+      <Number> = 有理数
       ```
 
 - 现代语言的分类
@@ -172,7 +191,7 @@
       - IEEE 754 Double Float
         - Sign(1)
         - Exponent（11位指数位，含1位符号位  log<sub>10</sub>(2<sup>1024</sup>)  ≈  308）
-        - Fraction（52位指数位，默认1.xxxx  log<sub>10</sub>(2<sup>53</sup>)  ≈  15.94）
+        - Fraction（52位二进制小数位，默认1.xxxx  log<sub>10</sub>(2<sup>53</sup>)  ≈  15.94）
       - Grammar
         - DecimallLiteral
           - 0
