@@ -32,7 +32,7 @@ class Request {
                     host: this.host,
                     port: this.port
                 }, () => {
-                    connection.write(this.toString(), "======");
+                    connection.write(this.toString());
                 })
             }
 
@@ -140,7 +140,6 @@ class ResponseParser {
                 this.current = this.WAITING_BODY;
             }
         } else if (this.current === this.WAITING_BODY) {
-            console.log(char)
             this.bodyParser.receiveChar(char)
         }
     }

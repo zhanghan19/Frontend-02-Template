@@ -14,7 +14,7 @@ class Request {
         if (this.headers["Content-Type"] === "application/json") {
             this.bodyText = JSON.stringify(this.body);
         } else if (this.headers["Content-Type"] === "application/x-www-form-urlencoded") {
-        
+
             this.bodyText = Object.keys(this.body).map(key => `${key}=${encodeURIComponent(this.body[key])}`).join('&');
         }
         this.headers["Content-Length"] = this.bodyText.length;
@@ -36,10 +36,11 @@ class Request {
             }
 
             connection.on("data", (data) => {
-                console.log(data.toString())
                 parser.receive(data.toString());
+                console.log(parser)
                 if (parser.isFinished) {
                     resolve(parser.response);
+                    console.log(parser.isFinished)
                     connection.end();
                 }
             });
@@ -81,14 +82,15 @@ class ResponseParser {
     }
 
     get response() {
-        this.statusLine.match(/^HTTP\/1\.1 ([1-5]\d{2}) (\w+)/);
+        this.statusLine.match(/HTTP\/1.1 ([0-9]+) ([\s\S]+)/)
         return {
             statusCode: RegExp.$1,
-            statusTxet: RegExp.$2,
+            statusTex: RegExp.$2,
             headers: this.headers,
             body: this.bodyParser.content.join('')
         }
     }
+
     receive(string) {
         for (let i = 0; i < string.length; i++) {
             this.receiveChar(string.charAt(i));
@@ -113,7 +115,7 @@ class ResponseParser {
                 this.current = this.WAITING_HEADER_BLOCK_END;
                 if (this.headers['Transfer-Encoding'] === 'chunked') {
                     this.bodyParser = new TrunkedBodyParser();
-                }
+                } 
             } else {
                 this.headerName += char;
             }
@@ -157,6 +159,7 @@ class TrunkedBodyParser {
         this.isFinished = false;
         this.current = this.WAITING_LENGTH;
     }
+
     receiveChar(char) {
         if (this.current === this.WAITING_LENGTH) {
             if (char === '\r') {
@@ -165,23 +168,24 @@ class TrunkedBodyParser {
                 }
                 this.current = this.WAITING_LENGTH_LINE_END;
             } else {
-                this.length *= 16;  // length 是16进制 所以要乘以16（？？？？？？？不解）
-                this.length += parseInt(char, 16);  // 字符转成16进制是何意
+                // console.log(char)
+                this.length *= 16;  
+                this.length += parseInt(char, 16);  
             }
         } else if (this.current === this.WAITING_LENGTH_LINE_END) {
             if (char === '\n') {
                 this.current = this.READING_TRUNK;
             }
         } else if (this.current === this.READING_TRUNK) {
-            console.log(char)
-            this.content.push(char);  // char是啥玩意
-            this.length--;  // length-- 又是什么个情况
+              
+            this.content.push(char);
+            this.length--;  
             if (this.length === 0) {
                 this.current = this.WAITING_NEW_LINE;
             }
         } else if (this.current === this.WAITING_NEW_LINE) {
             if (char === '\r') {
-                this.current === this.WAITING_NEW_LINE_END;
+                this.current = this.WAITING_NEW_LINE_END;
             }
         } else if (this.current === this.WAITING_NEW_LINE_END) {
             if (char === '\n') {
@@ -208,5 +212,5 @@ void async function () {
     });
     let response = await request.send();
     console.log(response);
-    let dom = parser.parseHTML(response.body);
+    // let dom = parser.parseHTML(response.body);
 }();
