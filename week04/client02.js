@@ -1,4 +1,5 @@
 const net = require("net");
+const parser = require("./parser02.js");
 
 class Request {
     constructor(options) {
@@ -37,10 +38,8 @@ class Request {
 
             connection.on("data", (data) => {
                 parser.receive(data.toString());
-                console.log(parser)
                 if (parser.isFinished) {
                     resolve(parser.response);
-                    console.log(parser.isFinished)
                     connection.end();
                 }
             });
@@ -211,6 +210,5 @@ void async function () {
         }
     });
     let response = await request.send();
-    console.log(response);
-    // let dom = parser.parseHTML(response.body);
+    let dom = parser.parseHTML(response.body);
 }();
