@@ -1,4 +1,5 @@
 const EOF = Symbol("EOF");
+
 module.exports.parseHTML = function parseHTML(html) {
     let state = data;
     for(let c of html) {
