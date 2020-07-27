@@ -1,9 +1,17 @@
-
-
+// 收集css规则
+const css = require('css');
 let currentToken = null;  // tag 不管有多复杂 是当做一个token去处理的
 let currentAttribute = null;
 let currentTextNode = null;
 let stack = [{ type: "document", children: [] }]
+
+// 加入一个新的函数，addCSSRules, 我们把CSS规则暂存到一个数组里
+let fules = [];
+function addCSSRules(text) {
+    const ast = css.parse(text);
+    console.log(JSON.stringify(ast, null, "   "));
+    fules.push(...ast.stylesheet.rules)
+}
 
 function emit(token) {
 
@@ -40,6 +48,10 @@ function emit(token) {
             throw new Error("Tag start end doesn't match")
         } else {
             // console.log('pop', stack.pop())
+            // 遇到style 标签时，执行添加 css 规则的操作
+            if (top.tagName === "style") {
+                addCSSRules(top.children[0].content)
+            }
             stack.pop()
         }
         currentTextNode = null;
@@ -57,8 +69,6 @@ function emit(token) {
 
 
 const EOF = Symbol("EOF");
-<<<<<<< HEAD
-=======
 function data(char) {
     if (char == "<") {
         return tagOpen
@@ -257,18 +267,12 @@ function selfClosingStartTag(char) {
         // return data
     }
 }
->>>>>>> 212eaccc53a1a1391eae01d079345eab4ccb694c
 
 module.exports.parseHTML = function parseHTML(html) {
     let state = data;
     for (let c of html) {
         state = state(c);
     }
-<<<<<<< HEAD
-    state = state(EOF)
-}
-=======
     state = state(EOF);
     console.log(stack[0]);
 }
->>>>>>> 212eaccc53a1a1391eae01d079345eab4ccb694c

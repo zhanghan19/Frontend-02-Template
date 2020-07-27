@@ -109,7 +109,18 @@
 - 文本节点与自封闭标签处理类似
 - 多个问本节点需要合并
 
-
+### 问题
+- response 解析过程 如何确定有多少种状态的，确定状态的过程有没有什么套路
+```
+  WAITING_STATUS_LINE = 0;
+  WAITING_STATUS_LINE_END = 1;
+  WAITING_HEADER_NAME = 2;
+  WAITING_HEADER_SPACE = 3;
+  WAITING_HEADER_VALUE = 4;
+  WAITING_HEADER_LINE_END = 5;
+  WAITING_HEADER_BLOCK_END = 6;
+  WAITING_BODY = 7;
+```
 
 
 

@@ -1,9 +1,100 @@
-
-
+// 收集css规则
+const css = require('css');
 let currentToken = null;  // tag 不管有多复杂 是当做一个token去处理的
 let currentAttribute = null;
 let currentTextNode = null;
 let stack = [{ type: "document", children: [] }]
+
+// 加入一个新的函数，addCSSRules，这里我们把css规则暂存到一个数组里
+let rules = []
+function addCSSRules(text) {
+    const ast = css.parse(text);
+    console.log(JSON.stringify(ast, null, "   "));
+    rules.push(...ast.stylesheet.rules)
+}
+
+function match(element, selector) {
+    if (!selector || !element.attributes)
+        return false
+
+    if (selector.charAt(0) == "#") {
+        const attr = element.attributes.filter(attr => attr.name === "id")[0];
+        if (attr && attr.value === selector.replace("#", ''))
+            return true
+    } else if (selector.charAt(0) == ".") {
+        const attr = element.attributes.filter(attr => attr.name === "class")[0];
+        if (attr && attr.value === selector.replace(".", ''))
+            return true
+    } else {
+        if (element.tagName === selector) {
+            return true
+        }
+    }
+    return false
+
+}
+
+function specificity(selector) {
+    const p = [0, 0, 0, 0,];
+    const selectorParts = selector.split(" ");
+
+}
+
+function compare(sp1, sp2) {
+	if (sp1[0] - sp2[0]) {
+		return sp1[0] - sp2[0]
+	}
+	if (sp1[1] - sp2[1]) {
+		return sp1[1] - sp2[1]
+	}
+	if (sp1[2] - sp2[2]) {
+		return sp1[2] - sp2[2]
+	}
+	return sp1[3] - sp2[3]
+}
+
+function computeCSS(element) {
+    const elements = stack.slice().reverse();  // 元素
+
+    if (!element.computedStyle) {
+        element.computedStyle = {};
+    }
+    for (let rule of fules) {
+        const selectorParts = rule.selectors[0].split(" ").reverse();
+        if (!match(element, selectorParts[0])) {
+            continue
+        }
+
+        let matched = false;
+        let j = 1;  // 当前选择器的位置
+        // i 表示当前元素的位置
+        for (let i = 0; i < elements.length; i++) {
+            if (match(elements[i], selectorParts[j])) {
+                j++
+            }
+        }
+        if (j >= selectorParts.length) {
+            matched = true
+        }
+
+        if (matched) {  // 匹配成功
+            const sp = specificity(rule.selectors[0])
+            const computedStyle = element.computedStyle;
+            for (let declaration of rule.declarations) {
+                if (!computedStyle[declaration.property]) {
+                    computedStyle[declaration.property] = {};
+                }
+                if (!computedStyle[declaration.property].specificity) {
+					computedStyle[declaration.property].value = declaration.value
+					computedStyle[declaration.property].specificity = sp
+				} else if (compare(computedStyle[declaration.property].specificity, sp) < 0) {
+					computedStyle[declaration.property].value = declaration.value
+					computedStyle[declaration.property].specificity = sp
+				}
+            }
+        }
+    }
+}
 
 function emit(token) {
 
@@ -26,6 +117,7 @@ function emit(token) {
                 })
             }
         }
+        computeCSS(element);
 
         top.children.push(element)
         element.parent = top
@@ -57,8 +149,6 @@ function emit(token) {
 
 
 const EOF = Symbol("EOF");
-<<<<<<< HEAD
-=======
 function data(char) {
     if (char == "<") {
         return tagOpen
@@ -257,18 +347,12 @@ function selfClosingStartTag(char) {
         // return data
     }
 }
->>>>>>> 212eaccc53a1a1391eae01d079345eab4ccb694c
 
 module.exports.parseHTML = function parseHTML(html) {
     let state = data;
     for (let c of html) {
         state = state(c);
     }
-<<<<<<< HEAD
-    state = state(EOF)
-}
-=======
     state = state(EOF);
     console.log(stack[0]);
 }
->>>>>>> 212eaccc53a1a1391eae01d079345eab4ccb694c
