@@ -282,7 +282,7 @@ function layout(element) {
             }
         })
     }
-    console.log(items)
+    console.log(items);
 }
 
 module.exports = layout;
