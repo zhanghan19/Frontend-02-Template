@@ -1,5 +1,6 @@
 // 收集css规则
 const css = require('css');
+const layout = require('./layout.js');
 let currentToken = null;  // tag 不管有多复杂 是当做一个token去处理的
 let currentAttribute = null;
 let currentTextNode = null;
@@ -52,6 +53,7 @@ function emit(token) {
             if (top.tagName === "style") {
                 addCSSRules(top.children[0].content)
             }
+            layout(top);
             stack.pop()
         }
         currentTextNode = null;
