@@ -174,9 +174,8 @@ function layout(element) {
                 flexLine.crossSpace = crossSpace;
 
                 // 创建新行
-                flexLine = [];
+                flexLine = [item];
                 flexLines.push(flexLine);
-                flexLine.push(item);
 
                 mainSpace = style[mainSize];
                 crossSpace = 0;

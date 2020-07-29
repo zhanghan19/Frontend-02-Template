@@ -1,6 +1,6 @@
 // 收集css规则
 const css = require('css');
-const layout = require('./layout.js');
+const layout = require('./layout4.js');
 let currentToken = null;  // tag 不管有多复杂 是当做一个token去处理的
 let currentAttribute = null;
 let currentTextNode = null;
@@ -10,7 +10,6 @@ let stack = [{ type: "document", children: [] }]
 let fules = [];
 function addCSSRules(text) {
     const ast = css.parse(text);
-    console.log(JSON.stringify(ast, null, "   "));
     fules.push(...ast.stylesheet.rules)
 }
 

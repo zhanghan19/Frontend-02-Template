@@ -1,5 +1,7 @@
 const net = require("net");
-const parser = require("./parser02.js");
+const parser = require("./computecss7.js");
+const images = require("images");
+const render = require("./render.js");
 
 class Request {
     constructor(options) {
@@ -114,7 +116,7 @@ class ResponseParser {
                 this.current = this.WAITING_HEADER_BLOCK_END;
                 if (this.headers['Transfer-Encoding'] === 'chunked') {
                     this.bodyParser = new TrunkedBodyParser();
-                } 
+                }
             } else {
                 this.headerName += char;
             }
@@ -168,17 +170,17 @@ class TrunkedBodyParser {
                 this.current = this.WAITING_LENGTH_LINE_END;
             } else {
                 // console.log(char)
-                this.length *= 16;  
-                this.length += parseInt(char, 16);  
+                this.length *= 16;
+                this.length += parseInt(char, 16);
             }
         } else if (this.current === this.WAITING_LENGTH_LINE_END) {
             if (char === '\n') {
                 this.current = this.READING_TRUNK;
             }
         } else if (this.current === this.READING_TRUNK) {
-              
+
             this.content.push(char);
-            this.length--;  
+            this.length--;
             if (this.length === 0) {
                 this.current = this.WAITING_NEW_LINE;
             }
@@ -211,4 +213,10 @@ void async function () {
     });
     let response = await request.send();
     let dom = parser.parseHTML(response.body);
+
+    let viewport = images(800, 600);
+    // render(viewport, dom.children[0].children[3].children[1].children[3]);
+    render(viewport, dom);
+    // console.log(JSON.stringify(dom,null, "    "))
+    viewport.save("viewport.jpg")
 }();

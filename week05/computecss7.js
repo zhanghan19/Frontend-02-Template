@@ -1,3 +1,4 @@
+const layout = require("./layout4.js");
 // 收集css规则
 const css = require('css');
 let currentToken = null;  // tag 不管有多复杂 是当做一个token去处理的
@@ -9,7 +10,7 @@ let stack = [{ type: "document", children: [] }]
 let rules = []
 function addCSSRules(text) {
     const ast = css.parse(text);
-    console.log(JSON.stringify(ast, null, "   "));
+    // console.log(JSON.stringify(ast, null, "   "));
     rules.push(...ast.stylesheet.rules)
 }
 
@@ -41,16 +42,16 @@ function specificity(selector) {
 }
 
 function compare(sp1, sp2) {
-	if (sp1[0] - sp2[0]) {
-		return sp1[0] - sp2[0]
-	}
-	if (sp1[1] - sp2[1]) {
-		return sp1[1] - sp2[1]
-	}
-	if (sp1[2] - sp2[2]) {
-		return sp1[2] - sp2[2]
-	}
-	return sp1[3] - sp2[3]
+    if (sp1[0] - sp2[0]) {
+        return sp1[0] - sp2[0]
+    }
+    if (sp1[1] - sp2[1]) {
+        return sp1[1] - sp2[1]
+    }
+    if (sp1[2] - sp2[2]) {
+        return sp1[2] - sp2[2]
+    }
+    return sp1[3] - sp2[3]
 }
 
 function computeCSS(element) {
@@ -59,7 +60,7 @@ function computeCSS(element) {
     if (!element.computedStyle) {
         element.computedStyle = {};
     }
-    for (let rule of fules) {
+    for (let rule of rules) {
         const selectorParts = rule.selectors[0].split(" ").reverse();
         if (!match(element, selectorParts[0])) {
             continue
@@ -85,12 +86,12 @@ function computeCSS(element) {
                     computedStyle[declaration.property] = {};
                 }
                 if (!computedStyle[declaration.property].specificity) {
-					computedStyle[declaration.property].value = declaration.value
-					computedStyle[declaration.property].specificity = sp
-				} else if (compare(computedStyle[declaration.property].specificity, sp) < 0) {
-					computedStyle[declaration.property].value = declaration.value
-					computedStyle[declaration.property].specificity = sp
-				}
+                    computedStyle[declaration.property].value = declaration.value
+                    computedStyle[declaration.property].specificity = sp
+                } else if (compare(computedStyle[declaration.property].specificity, sp) < 0) {
+                    computedStyle[declaration.property].value = declaration.value
+                    computedStyle[declaration.property].specificity = sp
+                }
             }
         }
     }
@@ -132,6 +133,11 @@ function emit(token) {
             throw new Error("Tag start end doesn't match")
         } else {
             // console.log('pop', stack.pop())
+            /** 遇到 style 标签时，执行添加 CCS 规则的操作 */
+            if (top.tagName === "style") {
+                addCSSRules(top.children[0].content)
+            }
+            layout(top);
             stack.pop()
         }
         currentTextNode = null;
@@ -354,5 +360,5 @@ module.exports.parseHTML = function parseHTML(html) {
         state = state(c);
     }
     state = state(EOF);
-    console.log(stack[0]);
+    return stack[0];
 }

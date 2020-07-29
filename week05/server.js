@@ -8,7 +8,7 @@ http.createServer((req, res) => {
         body.push(chunk.toString());
     }).on('end', () => {
         // body = Buffer.concat(body).toString();
-        console.log("body:", body);
+        // console.log("body:", body);
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.end( `<html maaa=a >
 		<head>
