@@ -57,8 +57,6 @@ function emit(token) {
 
 
 const EOF = Symbol("EOF");
-<<<<<<< HEAD
-=======
 function data(char) {
     if (char == "<") {
         return tagOpen
@@ -257,18 +255,12 @@ function selfClosingStartTag(char) {
         // return data
     }
 }
->>>>>>> 212eaccc53a1a1391eae01d079345eab4ccb694c
 
 module.exports.parseHTML = function parseHTML(html) {
     let state = data;
     for (let c of html) {
         state = state(c);
     }
-<<<<<<< HEAD
-    state = state(EOF)
-}
-=======
     state = state(EOF);
     console.log(stack[0]);
 }
->>>>>>> 212eaccc53a1a1391eae01d079345eab4ccb694c

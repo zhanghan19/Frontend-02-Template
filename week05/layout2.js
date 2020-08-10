@@ -48,7 +48,7 @@ function layout(element) {
     }
 
     if (!style.alignItems || style.alignItems === 'auto') {
-        style.alignItems = 'strech';
+        style.alignItems = 'stretch';
     }
 
     if (!style.justifyContent || style.justifyContent === 'auto') {
