@@ -30,6 +30,7 @@
       - <sp>
       - +
       - ~
+      - ||
     - simple_selector
       - type
       - *

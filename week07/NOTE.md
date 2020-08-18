@@ -24,8 +24,10 @@ CSS选择器选中的  **元素**  ， 在排版时可能产生多个 **盒**   
 ### 正常流
 
 - 收集盒和文字进行
-- 计算盒在行中的排布
+- 计算盒和文字在行中的排布
 - 计算行的排布
+  - inline -level-box行内级别的盒
+  - block-level-box 块级盒
 
 <img src="../images/he2.png" style="zoom:67%;" />
 
