@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.cell {
+				width: 100px;
+				height: 100px;
+				background-color: pink;
+				display: inline-block;
+				border: solid 1px #FFFFFF;
+				vertical-align: middle;
+				line-height: 100px;
+				font-size: 50px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="borad"></div>
+	</body>
+
+	<script type="text/javascript">
+		let pattern = [
+			[2, 0, 0],
+			[0, 1, 0],
+			[0, 0, 0]
+		];
+		let board = document.getElementById("borad");
+		let color = 1;
+
+		function show(pattern) {
+			let arrCell = [];
+			for (let i = 0; i < 3; i++) {
+				for (let j = 0; j < 3; j++) {
+					let status = pattern[i][j];
+					arrCell.push(
+						`<div class="cell" data-i=${i} data-j=${j}>
+									${
+										status == 2 ? "×" : 
+										status == 1 ? "√" : "" 
+									}
+								</div>`
+					);
+				}
+				arrCell.push('<br>');
+			}
+			board.innerHTML = arrCell.join('');
+		}
+
+		//事件监听
+		board.addEventListener('click', function(e) {
+			let i = Number(e.target.getAttribute('data-i'));
+			let j = Number(e.target.getAttribute('data-j'));
+			pattern[i][j] = color;
+			color = 3 - color;
+			show(pattern)
+		})
+
+		show(pattern)
+	</script>
+</html>

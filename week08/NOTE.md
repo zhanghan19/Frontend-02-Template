@@ -59,7 +59,7 @@
 - firstElememtChild
 - lastElementChild
 - nextElementSibling
-- previousElementSibling\
+- previousElementSibling
 
 #### 修改操作
 
