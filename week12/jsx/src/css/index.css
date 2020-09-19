@@ -1,0 +1,13 @@
+.carousel {
+  margin: 0 auto;
+  width: 640px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.carousel > .item{
+  width: 640px;
+  height: 300px;
+  display: inline-block;
+  background-size: 100%;
+  transition: ease 0.5s;
+}
