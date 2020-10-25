@@ -1,24 +1,24 @@
 var Generator = require('yeoman-generator');
 
 module.exports = class extends Generator {
-  
   constructor(args, opts) {
-    super(args, opts);
+    super(args, opts)
   }
 
   async initPackage() {
-   
-    let answer = await this.prompt([
+    // 获取项目名称
+    const answers = await this.prompt([
       {
         type: "input",
         name: "name",
         message: "Your project name",
         default: this.appname // Default to current folder name
       }
-    ])
+    ]);
 
+    // 整理包文件
     const pkgJson = {
-      "name": answer.name,
+      "name": answers.name,
       "version": "1.0.0",
       "description": "",
       "main": "generators/app/index.js",
@@ -28,47 +28,45 @@ module.exports = class extends Generator {
       "author": "",
       "license": "ISC",
       "devDependencies": {
-        
+       
       },
-      dependencies: {
+      "dependencies": {
        
       }
     };
 
-    // Extend or create package.json file in destination path
+    // 扩展或创建包。目标路径中的json文件
     this.fs.extendJSON(this.destinationPath('package.json'), pkgJson);
-    this.npmInstall(['vue'], { 'save-dev': false });
-    this.npmInstall(['webpack', "vue-loader","vue-style-loader",
-            "css-loader","vue-template-compiler"], { 'save-dev': true });
-  }
 
-  async method1() {
-    this.fs.copyTpl(
-      this.templatePath('t.html'),
-      this.destinationPath('public/index.html'),
-      { title: 'Templating with Yeoman' }
-    );
-   }
+    // 安装依赖
+    this.npmInstall(['vue'], { 'dev': true });  // dependencies
+    
+    this.npmInstall(['webpack','webpack-cli','copy-webpack-plugin','vue-loader',"vue-template-compiler"], { 'save-dev': true });  // devDependencies
 
-   readFiles() {
     this.fs.copyTpl(
-      this.templatePath('HelloVue.vue'),
-      this.destinationPath('src/HelloVue.vue'),
-      { }
+      this.templatePath('HelloWorld.vue'),
+      this.destinationPath('src/HelloWorld.vue'),
+      {}
     );
-    this.fs.copyTpl(
-      this.templatePath('webpack.config.js'),
-      this.destinationPath('webpack.config.js'),
-      { }
-    );
+
     this.fs.copyTpl(
       this.templatePath('main.js'),
       this.destinationPath('src/main.js'),
-      { }
+      {}
     );
-   }
+
+    this.fs.copyTpl(
+      this.templatePath('webpack.config.js'),
+      this.destinationPath('webpack.config.js'),
+      {}
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('index.html'),
+      this.destinationPath('src/index.html'),
+      { title: answers.name }
+    );
+  }
+
 
 };
-
-// D:\www\geekbang\work\Frontend-02-Template\week16\generators\app\templates\t.html
-// D:\www\geekbang\work\Frontend-02-Template\week16\templates
