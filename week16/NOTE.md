@@ -18,3 +18,5 @@
   ```shell
   this.npmInstall(['webpack','webpack-cli','copy-webpack-plugin','vue-loader',"vue-template-compiler"], { 'save-dev': true });  // devDependencies
   ```
+
+[点击查看详情](https://nanozh.com/front/toolchain/cli.html)
