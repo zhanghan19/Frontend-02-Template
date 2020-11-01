@@ -30,11 +30,11 @@ function emit(token) {
 
     top.children.push(element);
     element.parent = top;
-    // console.log(element, "--------------")
+    
     if (!token.isSelfClosing) {
       stack.push(element);
     }
-    // console.log(stack,"+++++++++++++++++++")
+
     currentTextNode = null;
   } else if (token.type == "endTag") {
     if (top.tagName != token.tagName) {
@@ -83,7 +83,11 @@ function tagOpen(c) {
     }
     return tagName(c);
   } else {
-    return;
+    emit({
+      type: 'text',
+      content: c
+    })
+    return data;
   }
 }
 
@@ -136,6 +140,7 @@ function beforeAttributeName(c) {
 function selfClosingStartTag(c) {
   if (c == ">") {
     currentToken.isSelfClosing = true;  // 
+    emit(currentToken);
     return data;
   } else if (c == "EOF") {
 
@@ -163,12 +168,11 @@ function beforeAttributeValue(c) {
     return beforeAttributeValue;
   } else if (c == "\"") {
     return doubleQuotedAttributeValue;
-  } else if (c == "\u0000") {
+  } else if (c == "\'") {
     return singleQuotedAttributeValue;
   } else if (c == "\"" || c == "'" || c == "<") {
 
   } else {
-
     return UnquotedAttributeValue(c);
   }
 }
@@ -213,8 +217,7 @@ function afterQuotedAttributeValue(c) {
   } else if (c == "EOF") {
 
   } else {
-    currentAttribute.value += c;
-    return doubleQuotedAttributeValue;
+    throw new Error("unexpected charater \"" + c + "\"")
   }
 }
 

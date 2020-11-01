@@ -10,9 +10,24 @@ describe('parser html', function () {
     assert.equal(tree.children[0].tagName, "a");
     assert.equal(tree.children[0].children.length, 0);
   });
+  it('<a>abc</a>', function () {
+    let tree = parseHTML('<a>abc</a>');
+    assert.equal(tree.children[0].tagName, "a");
+    assert.equal(tree.children[0].children.length, 1);
+  });
 
   it('<a href="//time.geekbang.org"></a>', function () {
     let tree = parseHTML('<a href="//time.geekbang.org"></a>');
+    assert.equal(tree.children.length, 1);
+    assert.equal(tree.children[0].children.length, 0);
+  });
+  it("<a href='time.geekbang.org'></a>", function () {
+    let tree = parseHTML("<a href='time.geekbang.org'></a>");
+    assert.equal(tree.children.length, 1);
+    assert.equal(tree.children[0].children.length, 0);
+  });
+  it('<a href=time.geekbang.org></a>', function () {
+    let tree = parseHTML('<a href=time.geekbang.org></a>');
     assert.equal(tree.children.length, 1);
     assert.equal(tree.children[0].children.length, 0);
   });
@@ -42,17 +57,32 @@ describe('parser html', function () {
     assert.equal(tree.children[0].children.length, 0);
   });
 
-  it('<a id="abc"/>', function() {
-    let tree = parseHTML('<a id="abc"/>');
-    console.log(tree)
+  it('<a id="abc" />', function() {
+    let tree = parseHTML('<a id="abc" />');
     assert.equal(tree.children.length, 1);
     assert.equal(tree.children[0].children.length, 0);
   });
 
-  it('<a id=\'abc\'/>', function() {
-    let tree = parseHTML('<a id=\'abc\'/>');
-    console.log(tree)
+  it('<a id=\'abc\' />', function() {
+    let tree = parseHTML('<a id=\'abc\' />');
     assert.equal(tree.children.length, 1);
     assert.equal(tree.children[0].children.length, 0);
   });
+  // it('<a/>', function() {
+  //   let tree = parseHTML('<a/>');
+  //   assert.equal(tree.children.length, 1);
+  //   assert.equal(tree.children[0].children.length, 0);
+  // });
+  // it('<A /> upper case', function() {
+  //   let tree = parseHTML('<A />');
+  //   assert.equal(tree.children.length, 1);
+  //   assert.equal(tree.children[0].children.length, 0);
+  // });
+
+  it('<>', function() {
+    let tree = parseHTML('<>');
+    assert.equal(tree.children.length, 1);
+    assert.equal(tree.children[0].type, "text");
+  });
+
 });
